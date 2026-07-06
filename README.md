@@ -159,9 +159,9 @@ This opens the app in your browser at `http://localhost:8501`.
 5. Click **⏹ Stop**, or let the video finish, to end the session
 6. Download the processed output using the **⬇️ Download Output** button
 
-<img width="500" height="375" alt="image" src="https://github.com/user-attachments/assets/794c1fc0-68ae-468a-95ce-d7ae7f069242" />
+<img width="700" height="375" alt="image" src="https://github.com/user-attachments/assets/794c1fc0-68ae-468a-95ce-d7ae7f069242" />
 
-<img width="500" height="375" alt="image" src="https://github.com/user-attachments/assets/bd0ce578-d681-470a-bab3-7034e0d2b639" />
+<img width="700" height="375" alt="image" src="https://github.com/user-attachments/assets/bd0ce578-d681-470a-bab3-7034e0d2b639" />
 
 ---
 
