@@ -174,11 +174,15 @@ This opens the app in your browser at `http://localhost:8501`.
 
 ## 🖼️ Screenshots
 
-<img width="900" height="675" alt="detection_20260706_171841" src="https://github.com/user-attachments/assets/2d865435-a674-42e6-b6ff-63dccc6140cb" />
+<img width="500" height="375" alt="detection_20260706_171841" src="https://github.com/user-attachments/assets/2d865435-a674-42e6-b6ff-63dccc6140cb" />
 
-<img width="900" height="399" alt="detection_20260706_171653" src="https://github.com/user-attachments/assets/fb0554da-7e0c-4fb8-8d5f-333df2c421cd" />
 
-<img width="900" height="586" alt="detection_20260706_171741" src="https://github.com/user-attachments/assets/4b3d3f6b-2721-4b78-83e3-d27e00a8bd0a" />
+
+<img width="500" height="375" alt="detection_20260706_171653" src="https://github.com/user-attachments/assets/fb0554da-7e0c-4fb8-8d5f-333df2c421cd" />
+
+
+
+<img width="500" height="375" alt="detection_20260706_171741" src="https://github.com/user-attachments/assets/4b3d3f6b-2721-4b78-83e3-d27e00a8bd0a" />
 
 ---
 
