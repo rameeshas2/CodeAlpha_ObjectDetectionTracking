@@ -6,6 +6,9 @@ from detector import Detector
 from utils.fps import FPSCounter
 from utils.counter import ObjectCounter
 from datetime import datetime
+import os
+
+os.makedirs("output", exist_ok=True)
 
 st.set_page_config(
     page_title="Object Detection & Tracking",
@@ -286,7 +289,7 @@ if start_button and source_type == "Upload Image":
             file_name=os.path.basename(output_path),
             mime="image/jpeg"
         )
-        
+
 # =====================================================
 # VIDEO / WEBCAM MODE
 # =====================================================
