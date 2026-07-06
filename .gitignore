@@ -1,0 +1,27 @@
+# Virtual environments
+venv/
+.venv/
+yolov8_env/
+
+# Python cache
+__pycache__/
+*.pyc
+
+# VS Code
+.vscode/
+
+# PyCharm
+.idea/
+
+# YOLO outputs
+runs/
+
+# Output files
+output/*.mp4
+output/*.avi
+output/*.jpg
+output/*.png
+
+# OS files
+.DS_Store
+Thumbs.db
