@@ -188,6 +188,10 @@ This opens the app in your browser at `http://localhost:8501`.
 
 <img width="700" height="375" alt="detection_20260706_171741" src="https://github.com/user-attachments/assets/4b3d3f6b-2721-4b78-83e3-d27e00a8bd0a" />
 
+
+<img width="700" height="375" alt="image" src="https://github.com/user-attachments/assets/6a7ab923-8e69-4bad-99ae-7b1d57d3763d" />
+
+
 ---
 
 ## 🚀 Possible Improvements
