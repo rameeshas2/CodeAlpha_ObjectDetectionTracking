@@ -13,15 +13,6 @@ __pycache__/
 # PyCharm
 .idea/
 
-# YOLO outputs
-runs/
-
-# Output files
-output/*.mp4
-output/*.avi
-output/*.jpg
-output/*.png
-
 # OS files
 .DS_Store
 Thumbs.db
