@@ -163,6 +163,9 @@ This opens the app in your browser at `http://localhost:8501`.
 
 <img width="700" height="375" alt="image" src="https://github.com/user-attachments/assets/bd0ce578-d681-470a-bab3-7034e0d2b639" />
 
+<img width="700" height="375" alt="image" src="https://github.com/user-attachments/assets/a441d2dd-247f-41cc-ae68-f4687df8dbb7" />
+
+
 ---
 
 ## 📊 Live Statistics Explained
