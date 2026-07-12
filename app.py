@@ -11,268 +11,224 @@ os.makedirs("output", exist_ok=True)
 
 st.set_page_config(
     page_title="Object Detection & Tracking",
-    page_icon="🎯",
+    page_icon="◆",
     layout="wide"
 )
 
 st.markdown(
     """
     <style>
-        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap');
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@500&display=swap');
 
         html, body, [class*="css"] {
-            font-family: 'Inter', sans-serif;
+            font-family: 'Inter', -apple-system, sans-serif;
+            color: #d4d7dd;
         }
 
         .stApp {
-            background: linear-gradient(135deg, #07111f 0%, #111c31 45%, #0b1326 100%);
+            background: #0e1116;
         }
 
-        header[data-testid="stHeader"] {
-            background: transparent;
-        }
-
-        #MainMenu, footer {
-            visibility: hidden;
-        }
+        header[data-testid="stHeader"] { background: transparent; }
+        #MainMenu, footer { visibility: hidden; }
 
         section[data-testid="stSidebar"] {
-            background: linear-gradient(180deg, #101a2f 0%, #0b1424 100%);
-            border-right: 1px solid rgba(255,255,255,0.08);
+            background: #14171e;
+            border-right: 1px solid #262b35;
         }
 
-        .hero-card {
-            padding: 26px 28px;
-            border-radius: 24px;
-            background: linear-gradient(135deg, rgba(14, 21, 38, 0.96), rgba(8, 15, 29, 0.92));
-            border: 1px solid rgba(255,255,255,0.09);
-            box-shadow: 0 18px 48px rgba(0, 0, 0, 0.32);
-            margin-bottom: 18px;
-            backdrop-filter: blur(14px);
+        .block-container {
+            padding-top: 2.5rem;
+            max-width: 1150px;
         }
 
         .eyebrow {
-            color: #8fa8ff;
-            font-size: 0.76rem;
-            font-weight: 800;
-            letter-spacing: 0.2em;
+            color: #6e7681;
+            font-size: 0.72rem;
+            font-weight: 600;
+            letter-spacing: 0.08em;
             text-transform: uppercase;
             margin-bottom: 8px;
         }
 
-        .hero-title {
-            font-size: 2.2rem;
-            font-weight: 800;
-            color: #f7fbff;
+        .page-title {
+            font-size: 1.65rem;
+            font-weight: 700;
+            color: #f0f2f5;
             margin: 0 0 8px 0;
-            letter-spacing: -0.02em;
+            letter-spacing: -0.01em;
         }
 
-        .hero-sub {
-            color: #9ca8c3;
-            font-size: 1rem;
-            margin: 0;
-            max-width: 820px;
+        .page-sub {
+            color: #8b929e;
+            font-size: 0.92rem;
+            margin: 0 0 28px 0;
+            max-width: 680px;
             line-height: 1.6;
         }
 
-        .hero-pills {
-            display: flex;
-            flex-wrap: wrap;
-            gap: 10px;
-            margin-top: 14px;
-        }
-
-        .hero-pill {
-            display: inline-block;
-            padding: 7px 12px;
-            border-radius: 999px;
-            background: rgba(134, 168, 255, 0.16);
-            color: #cfdcff;
-            font-size: 0.82rem;
+        .sidebar-label {
+            color: #6e7681;
+            font-size: 0.68rem;
             font-weight: 600;
-            border: 1px solid rgba(134, 168, 255, 0.28);
+            text-transform: uppercase;
+            letter-spacing: 0.07em;
+            margin-top: 20px;
+            margin-bottom: 8px;
         }
 
-        .panel-card {
-            background: linear-gradient(145deg, rgba(10, 16, 29, 0.95), rgba(8, 13, 24, 0.95));
-            border: 1px solid rgba(255,255,255,0.08);
-            border-radius: 20px;
-            padding: 16px 16px 14px;
-            box-shadow: 0 12px 34px rgba(0, 0, 0, 0.24);
+        .panel {
+            background: #14171e;
+            border: 1px solid #262b35;
+            border-radius: 8px;
+            padding: 14px 16px;
             margin-bottom: 14px;
         }
 
-        .preview-card {
-            padding: 12px;
+        .panel-title {
+            color: #d4d7dd;
+            font-size: 0.82rem;
+            font-weight: 600;
+            margin-bottom: 10px;
         }
 
-        .section-title {
-            color: #dce7ff;
-            font-size: 0.92rem;
-            font-weight: 700;
-            margin: 6px 0 8px;
-        }
-
-        .sidebar-stack {
+        .steps {
             display: flex;
-            flex-direction: column;
-            gap: 10px;
+            border: 1px solid #262b35;
+            border-radius: 8px;
+            overflow: hidden;
+            margin-bottom: 24px;
         }
-
-        .workflow-wrap {
-            margin: 4px 0 18px 0;
+        .step {
+            flex: 1;
+            padding: 14px 18px;
+            border-right: 1px solid #262b35;
         }
-
-        .workflow-header {
-            color: #e2ebff;
-            font-size: 0.95rem;
-            font-weight: 700;
-            margin-bottom: 10px;
-            letter-spacing: 0.03em;
+        .step:last-child { border-right: none; }
+        .step-num {
+            color: #565d68;
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 0.72rem;
+            font-weight: 500;
+            margin-bottom: 6px;
         }
-
-        .workflow-grid {
-            display: grid;
-            grid-template-columns: repeat(3, minmax(0, 1fr));
-            gap: 12px;
+        .step-title {
+            color: #e6e8ec;
+            font-size: 0.88rem;
+            font-weight: 600;
+            margin-bottom: 4px;
         }
-
-        .workflow-card {
-            background: linear-gradient(145deg, rgba(17, 25, 43, 0.95), rgba(8, 15, 28, 0.95));
-            border: 1px solid rgba(255,255,255,0.08);
-            border-radius: 18px;
-            padding: 14px 15px;
-            min-height: 128px;
-            box-shadow: inset 0 1px 0 rgba(255,255,255,0.03);
-        }
-
-        .workflow-step {
-            display: inline-flex;
-            align-items: center;
-            justify-content: center;
-            width: 34px;
-            height: 34px;
-            border-radius: 999px;
-            background: linear-gradient(135deg, #7b8cff, #51c4ff);
-            color: white;
+        .step-text {
+            color: #7d8590;
             font-size: 0.8rem;
-            font-weight: 800;
-            margin-bottom: 10px;
+            line-height: 1.5;
         }
 
-        .workflow-title {
-            color: #f7fbff;
-            font-size: 1rem;
-            font-weight: 700;
-            margin-bottom: 5px;
+        [data-testid="stFileUploaderDropzone"] {
+            background: #14171e !important;
+            border: 1px dashed #2b303a !important;
+            border-radius: 8px !important;
         }
-
-        .workflow-text {
-            color: #8da0c5;
-            font-size: 0.9rem;
-            line-height: 1.45;
+        [data-testid="stFileUploaderDropzone"] * {
+            color: #a8afba !important;
+        }
+        [data-testid="stFileUploaderDropzone"] button {
+            background: #1c2230 !important;
+            border: 1px solid #2b3140 !important;
+            color: #e6e8ec !important;
+            border-radius: 6px !important;
+        }
+        [data-testid="stFileUploaderDropzone"] button:hover {
+            background: #232a3a !important;
+            border-color: #3d4658 !important;
+        }
+        [data-testid="stFileUploaderDropzone"] svg {
+            fill: #6e7681 !important;
         }
 
         .placeholder-box {
-            min-height: 440px;
+            min-height: 420px;
             display: flex;
             align-items: center;
             justify-content: center;
             text-align: center;
-            color: #7d8baa;
-            font-size: 1.04rem;
-            font-weight: 600;
-            border: 1px dashed rgba(134, 168, 255, 0.25);
-            border-radius: 16px;
-            background: linear-gradient(135deg, rgba(255,255,255,0.02), rgba(134,168,255,0.04));
+            color: #565d68;
+            font-size: 0.9rem;
+            border: 1px dashed #2b303a;
+            border-radius: 8px;
         }
 
         .chip {
             display: inline-block;
-            margin: 5px 8px 0 0;
-            padding: 7px 10px;
-            border-radius: 999px;
-            background: rgba(134, 168, 255, 0.16);
-            color: #dce8ff;
-            font-size: 0.86rem;
-            border: 1px solid rgba(134, 168, 255, 0.22);
+            margin: 0 6px 6px 0;
+            padding: 4px 10px;
+            border-radius: 5px;
+            background: #1c2028;
+            color: #a8afba;
+            font-size: 0.78rem;
+            border: 1px solid #262b35;
+        }
+
+        .status-line {
+            font-size: 0.85rem;
+            color: #8b929e;
+            line-height: 1.6;
+        }
+        .status-line b {
+            color: #e6e8ec;
+            font-family: 'JetBrains Mono', monospace;
+            font-weight: 500;
         }
 
         div.stButton > button {
-            border-radius: 12px;
-            font-weight: 700;
-            min-height: 44px;
-            border: none;
-            background: linear-gradient(90deg, #7b8cff 0%, #51c4ff 100%);
-            color: white;
-            transition: transform 0.2s ease, box-shadow 0.2s ease;
+            border-radius: 6px;
+            font-weight: 600;
+            font-size: 0.85rem;
+            min-height: 38px;
+            border: 1px solid #2b3140;
+            background: #1c2230;
+            color: #e6e8ec;
         }
-
         div.stButton > button:hover {
-            transform: translateY(-1px);
-            box-shadow: 0 8px 20px rgba(81, 196, 255, 0.26);
+            border-color: #3d4658;
+            background: #232a3a;
+        }
+        div.stButton > button:first-child {
+            background: #3562e8;
+            border-color: #3562e8;
+            color: #ffffff;
+        }
+        div.stButton > button:first-child:hover {
+            background: #2e56d1;
         }
 
-        div.stButton > button:focus {
-            box-shadow: 0 0 0 2px rgba(255,255,255,0.16);
-        }
-
-        .status-box {
-            border-radius: 14px;
-            padding: 12px 13px;
-            background: rgba(255,255,255,0.03);
-            color: #b7c2da;
-            border: 1px solid rgba(255,255,255,0.06);
-            font-size: 0.92rem;
-            line-height: 1.5;
-        }
-
-        .status-box strong {
-            color: #f7fbff;
-        }
-
-        img {
-            border-radius: 14px;
-        }
+        img { border-radius: 8px; }
     </style>
     """,
     unsafe_allow_html=True,
 )
 
 st.markdown(
-    """
-    <div class="hero-card">
-        <div class="eyebrow">Computer Vision Studio</div>
-        <h1 class="hero-title">Object Detection & Tracking</h1>
-        <p class="hero-sub">A refined interface for running YOLOv8-based detection and tracking with a clear workflow, responsive controls, and polished output presentation.</p>
-        <div class="hero-pills">
-            <span class="hero-pill">Live preview</span>
-            <span class="hero-pill">Tracked objects</span>
-            <span class="hero-pill">Export-ready results</span>
-        </div>
-    </div>
-    """,
+    '<div class="eyebrow">CodeAlpha AI Internship · Task 4</div>'
+    '<div class="page-title">Object Detection & Tracking</div>'
+    '<div class="page-sub">Real-time object detection and multi-object tracking using YOLOv8 and ByteTrack, with live statistics and exportable output.</div>',
     unsafe_allow_html=True,
 )
 
 with st.sidebar:
-    st.markdown('<div class="panel-card">', unsafe_allow_html=True)
-    st.markdown('<div class="section-title">Session controls</div>', unsafe_allow_html=True)
-    st.markdown('<div class="sidebar-stack">', unsafe_allow_html=True)
-
+    st.markdown('<div class="sidebar-label">Source</div>', unsafe_allow_html=True)
     source_type = st.radio(
         "Source",
         ["Webcam", "Upload Video", "Upload Image"],
         label_visibility="collapsed",
     )
 
-    st.markdown('<div class="section-title">Confidence</div>', unsafe_allow_html=True)
+    st.markdown('<div class="sidebar-label">Confidence threshold</div>', unsafe_allow_html=True)
     conf_threshold = st.slider("Confidence", 0.1, 1.0, 0.5, 0.05, label_visibility="collapsed")
 
     col1, col2 = st.columns(2)
     with col1:
-        start_button = st.button("Run detection", key="start_btn", use_container_width=True)
+        start_button = st.button("Run", key="start_btn", use_container_width=True)
     with col2:
         st.button("Reset", key="stop_btn", use_container_width=True)
 
@@ -280,86 +236,48 @@ with st.sidebar:
     image_file = None
 
     if source_type == "Upload Video":
-        st.markdown('<div class="section-title">Upload video</div>', unsafe_allow_html=True)
+        st.markdown('<div class="sidebar-label">Video file</div>', unsafe_allow_html=True)
         video_file = st.file_uploader("Upload a video", type=["mp4", "avi", "mov"], label_visibility="collapsed")
 
     if source_type == "Upload Image":
-        st.markdown('<div class="section-title">Upload image</div>', unsafe_allow_html=True)
+        st.markdown('<div class="sidebar-label">Image file</div>', unsafe_allow_html=True)
         image_file = st.file_uploader("Upload an image", type=["jpg", "jpeg", "png"], label_visibility="collapsed")
 
-    st.markdown("<div class='section-title'>Workflow guide</div>", unsafe_allow_html=True)
-    st.markdown(
-        """
-        <div class="status-box">
-            Select a source, adjust the confidence slider, and launch detection. The preview updates instantly and the final output is saved for download.
-        </div>
-        """,
-        unsafe_allow_html=True,
-    )
-
-    st.markdown("<div class='section-title'>Live status</div>", unsafe_allow_html=True)
+    st.markdown('<div class="sidebar-label">Status</div>', unsafe_allow_html=True)
     stats_placeholder = st.empty()
     stats_placeholder.markdown(
-        """
-        <div class="status-box">
-            Waiting for a run to begin.
-        </div>
-        """,
+        '<div class="panel"><div class="status-line">Idle — waiting for a run.</div></div>',
         unsafe_allow_html=True,
     )
-    st.markdown("</div>", unsafe_allow_html=True)
-    st.markdown("</div>", unsafe_allow_html=True)
 
 st.markdown(
-    """
-    <div class="workflow-wrap">
-        <div class="workflow-header">Detection workflow</div>
-        <div class="workflow-grid">
-            <div class="workflow-card">
-                <div class="workflow-step">01</div>
-                <div class="workflow-title">Detect</div>
-                <div class="workflow-text">YOLOv8 identifies objects in each frame using your selected confidence threshold.</div>
-            </div>
-            <div class="workflow-card">
-                <div class="workflow-step">02</div>
-                <div class="workflow-title">Track</div>
-                <div class="workflow-text">Each detected object is followed across frames with consistent tracking IDs.</div>
-            </div>
-            <div class="workflow-card">
-                <div class="workflow-step">03</div>
-                <div class="workflow-title">Export</div>
-                <div class="workflow-text">Annotated results are saved and ready to download as image or video output.</div>
-            </div>
-        </div>
-    </div>
-    """,
+    '<div class="steps">'
+    '<div class="step"><div class="step-num">01</div><div class="step-title">Detect</div>'
+    '<div class="step-text">YOLOv8 identifies objects in each frame at the chosen confidence threshold.</div></div>'
+    '<div class="step"><div class="step-num">02</div><div class="step-title">Track</div>'
+    '<div class="step-text">ByteTrack maintains a consistent ID for each object across frames.</div></div>'
+    '<div class="step"><div class="step-num">03</div><div class="step-title">Export</div>'
+    '<div class="step-text">Annotated output is saved and available to download.</div></div>'
+    '</div>',
     unsafe_allow_html=True,
 )
 
 video_col, info_col = st.columns([3, 1], gap="large")
 
 with video_col:
-    st.markdown('<div class="panel-card preview-card">', unsafe_allow_html=True)
     frame_placeholder = st.empty()
     frame_placeholder.markdown(
-        """
-        <div class="placeholder-box">
-            Choose a source and run detection to generate a live preview of the annotated output.
-        </div>
-        """,
+        '<div class="placeholder-box">Choose a source in the sidebar, then click Run.</div>',
         unsafe_allow_html=True,
     )
-    st.markdown("</div>", unsafe_allow_html=True)
 
 with info_col:
-    st.markdown('<div class="panel-card">', unsafe_allow_html=True)
-    st.markdown('<div class="section-title">Detected classes</div>', unsafe_allow_html=True)
+    st.markdown('<div class="panel-title">Detected classes</div>', unsafe_allow_html=True)
     classes_placeholder = st.empty()
     classes_placeholder.markdown(
-        "<div class='status-box'>No objects detected yet.</div>",
+        "<div class='status-line'>No objects detected yet.</div>",
         unsafe_allow_html=True,
     )
-    st.markdown("</div>", unsafe_allow_html=True)
 
 DISPLAY_WIDTH = 900
 SKIP = 2
@@ -389,11 +307,7 @@ if start_button and source_type == "Upload Image":
     cv2.imwrite(output_path, annotated)
 
     stats_placeholder.markdown(
-        f"""
-        <div class="status-box">
-            <strong>{len(result.boxes)}</strong> objects detected in the uploaded image.
-        </div>
-        """,
+        f'<div class="panel"><div class="status-line"><b>{len(result.boxes)}</b> objects detected.</div></div>',
         unsafe_allow_html=True,
     )
 
@@ -401,13 +315,10 @@ if start_button and source_type == "Upload Image":
         cls_ids = result.boxes.cls.cpu().numpy()
         unique_classes = sorted(set(detector.class_names[int(c)] for c in cls_ids))
         classes_html = "".join([f"<span class='chip'>{c.title()}</span>" for c in unique_classes])
-        classes_placeholder.markdown(
-            f"<div class='status-box'>{classes_html}</div>",
-            unsafe_allow_html=True,
-        )
+        classes_placeholder.markdown(classes_html, unsafe_allow_html=True)
     else:
         classes_placeholder.markdown(
-            "<div class='status-box'>No objects detected.</div>",
+            "<div class='status-line'>No objects detected.</div>",
             unsafe_allow_html=True,
         )
 
@@ -424,7 +335,7 @@ if start_button and source_type in ["Webcam", "Upload Video"]:
     if source_type == "Webcam":
         cap = cv2.VideoCapture(0, cv2.CAP_DSHOW)
         if not cap.isOpened():
-            st.error("Could not access the webcam. Please check camera permissions and availability.")
+            st.error("Could not access the webcam. Check camera permissions and availability.")
             st.stop()
     else:
         if video_file is None:
@@ -483,11 +394,11 @@ if start_button and source_type in ["Webcam", "Upload Video"]:
         frame_placeholder.image(annotated, channels="BGR", use_container_width=True)
 
         stats_placeholder.markdown(
-            f"""
-            <div class="status-box">
-                <strong>{len(result.boxes)}</strong> objects in the current frame • <strong>{total_tracked}</strong> tracked IDs • <strong>{fps}</strong> FPS
-            </div>
-            """,
+            f'<div class="panel"><div class="status-line">'
+            f'<b>{len(result.boxes)}</b> objects in frame<br>'
+            f'<b>{total_tracked}</b> tracked IDs<br>'
+            f'<b>{fps}</b> FPS'
+            f'</div></div>',
             unsafe_allow_html=True,
         )
 
@@ -495,13 +406,10 @@ if start_button and source_type in ["Webcam", "Upload Video"]:
             cls_ids = result.boxes.cls.cpu().numpy()
             unique_classes = sorted(set(detector.class_names[int(c)] for c in cls_ids))
             classes_html = "".join([f"<span class='chip'>{c.title()}</span>" for c in unique_classes])
-            classes_placeholder.markdown(
-                f"<div class='status-box'>{classes_html}</div>",
-                unsafe_allow_html=True,
-            )
+            classes_placeholder.markdown(classes_html, unsafe_allow_html=True)
         else:
             classes_placeholder.markdown(
-                "<div class='status-box'>No objects detected yet.</div>",
+                "<div class='status-line'>No objects detected yet.</div>",
                 unsafe_allow_html=True,
             )
 
